@@ -12,10 +12,24 @@
 
 <script>
 export default {
-  async fetch({store}) {
-    if (store.getters['users/users'].length === 0) {
+  async fetch({app, store, redirect}) {
+      const token = await app.$cookies.get('quwi_user_token')
+      if (!token) {
+          // store.commit('removeUserToken')
+          return redirect('/login')
+      }
+
       await store.dispatch('users/fetch')
-    }
+
+      // if (!store.state.validToken) {
+      //     return redirect('/login')
+      // }
+
+
+
+    // if (store.getters['users/users'].length === 0) {
+    //
+    // }
   },
   data: () => ({
     pageTitle: 'Users page'
