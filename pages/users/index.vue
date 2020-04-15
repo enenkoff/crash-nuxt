@@ -4,14 +4,20 @@
 
     <ul>
       <li v-for="user of users" :key="user.id">
-        <a href="#" @click.prevent="openUser(user)">{{user.name}}</a>
+        <ProjectItem :project-data="user" />
       </li>
     </ul>
   </section>
 </template>
 
 <script>
+
+import ProjectItem from '@/components/ProjectItem.vue'
+
 export default {
+    components: {
+        ProjectItem
+    },
   async fetch({app, store, redirect}) {
       const token = await app.$cookies.get('quwi_user_token')
       if (!token) {
@@ -39,11 +45,7 @@ export default {
       return this.$store.getters['users/users']
     }
   },
-  methods: {
-    openUser(user) {
-      this.$router.push('/users/' + user.id)
-    }
-  }
+
 }
 </script>
 
